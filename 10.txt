@@ -1,0 +1,67 @@
+10.	Human resource management is a major challenge for any organization with thousands of employees spread over many regions. Employee information, salary structure, service details, promotion due date etc. have to be maintained and updated periodically. Web based solution or a desktop solution will be of great help in such cases.  (hint: use COLLECTIONS, DATABASE & CLIENT SERVER)
+a.	Construct a Java program to create the employee database, display the information and allow entries to be added or removed from the client side.
+b.	Provide methods to display Employee information,salary structure, service details, promotion due date etc.  in the web page.
+c.	Sort the employees based on Emp ID and Display
+d.	Demonstrate the use of iterator in collections
+
+HTML File test.html (front end/UI)
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="Test" method="post">
+Name: <input type="text" name="ename">
+Number: <input type="text" name="enum">
+Department: <input type="text" name="edept">
+Date of Joining: <input type="text" name="edoj">
+<input type="submit">
+</form>
+</body>
+</html>
+
+Servlet Program Test.java (Server Side Program)
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.sql.*;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+/* Only doPost() method Implementation */
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		ArrayList<String> list=new ArrayList<String>();
+		
+		PrintWriter out=response.getWriter();
+		list.add(request.getParameter("ename"));
+		list.add(request.getParameter("enum"));
+		list.add(request.getParameter("edept"));
+		list.add(request.getParameter("edoj"));
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:8889/emp","root","root");
+			Statement st=con.createStatement();
+			int row=st.executeUpdate("Insert into employee values('"+list.get(0)+"','"+list.get(1)+"','"+list.get(2)+"','"+list.get(3)+"');");
+			if(row>0){
+				Iterator itr=list.iterator();  
+				while(itr.hasNext()){  
+				out.println(itr.next());  
+				  }  
+				out.print("Above Data Inserted Succesfully");	
+			}
+			
+		} catch (ClassNotFoundException e) {
+`			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
