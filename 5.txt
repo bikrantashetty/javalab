@@ -2,152 +2,174 @@
 a.	Implement some basic searching and sorting methods in the packages.
 b.	Search for a particular student in a student list of CSE department. sort the elements before performing the binary search. Use methods defined in the packages. (Use sequential threads)
 c.	Sort same student list concurrently using different sorting methods available in the packages. (use Concurrent threads)
-package algorithms.search;
-
-publicclass BinarySearch {
-	publicvoid binarySearch(int array[],int n, int key)
-	  {
-	int first, last, middle, search;
-	
-	search = key;
-	
-	first  = 0;
-	last   = n - 1;
-	middle = (first + last)/2;
-	
-	while( first <= last )
-	    {
-	if ( array[middle] < search )
-	first = middle + 1;    
-	elseif ( array[middle] == search ) 
-	      {
-	System.out.println(search + " found at location " + (middle + 1) + ".");
-	break;
-	      }
-	else
-	last = middle - 1;
-	
-	middle = (first + last)/2;
-	   }
-	if ( first > last )
-	System.out.println(search + " is not present in the list.\n");
-	  }
-
-}
-
-
-package algorithms.sort;
-
-publicclass BubbleSort {
-	
-publicint [] bubbleSort(int arr[],int n){ 
-	System.out.println("Sorting using Bubble Sort");
-int temp = 0;  int i=0;
-for(; i < n; i++){  
-for(int j=1; j < (n-i); j++){  
-if(arr[j-1] > arr[j]){  
-                             //swap elements  
-temp = arr[j-1];  
-arr[j-1] = arr[j];  
-arr[j] = temp;  
-		}  
-
-	}  
-try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-     }
-return arr;
-	}
-}
-package algorithms.sort;
-publicclass SelectionSort {
-publicint [] selectionSort(int arr[],int n){
-	System.out.println("Sorting using Selection Sort");
-	int i = 0;
-	for (; i < n - 1; i++)  
-       {  
-int index = i;  
-for (int j = i + 1; j < n; j++){  
-if (arr[j] < arr[index]){  
-index = j;//searching for lowest index  
-               }  
-           }  
-int smallerNumber = arr[index];   
-arr[index] = arr[i];  
-arr[i] = smallerNumber;  
-
-try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-       } 
-	
-	return arr;
- }
-}
-package lab_programs;
-import algorithms.search.*;
-import algorithms.sort.*;
-
-class Sort extends Thread{
+//Five.java
+import algo.search.*;
+import algo.sort.*;
+class Sort extends Thread
+{
 	String str;
+	
 	Sort(int i){
 		if(i==1)
 			str="Bub";
 		else
 			str="Sel";
 	}
-	publicvoid run(){
+	
+	public void run()
+	{
 		int arr[]={5,3,1,6,4};
-		int arr1[]={25,23,21,26,24};
-		
+		int arr1[]={23,45,12,10,53};
 		int array[];
 		int n=5;
-		if(str.equals("Bub"))
-			{
-			BubbleSort bubsort=new BubbleSort();
-			array=bubsort.bubbleSort(arr1, n);
+		
+		if (str.equals("Bub"))
+		{
+			BubbleSort b = new BubbleSort();
+			array = b.Bubble(arr1,n);
 			for(int i=0;i<array.length;i++)
 				System.out.println(array[i]);
-			}
-			else
-			{
-				SelectionSort selsort=new SelectionSort();
-				array=selsort.selectionSort(arr,n);
-				for(int i=0;i<array.length;i++)
-					System.out.println(array[i]);
-			}
+		}
+		
+		else
+		{
+			SelectionSort s=new SelectionSort();
+			array=s.Selection(arr, n);
+			for(int i=0;i<array.length;i++)
+				System.out.println(array[i]);
 		}
 	}
+}
 
-class Search extends Thread{
-	publicvoid run(){
-		int arr[]={15,13,11,16,14};
+class Search extends Thread
+{
+	public void run()
+	{
+		int arr[]={15,24,34,12,13};
 		int array[];
-		int n=5,key=13;
-		BubbleSort bubsort=new BubbleSort();
-		array=bubsort.bubbleSort(arr, n);
-		BinarySearch bs=new BinarySearch();
-		bs.binarySearch(array, n, key);
+		int n=5,key=34;
+		BubbleSort b= new BubbleSort();
+		array=b.Bubble(arr,n);
+		BinarySearch bs= new BinarySearch();
+		for(int i=0;i<array.length;i++)
+			System.out.println(array[i]);
+		bs.Binary(array,n,key);
 	}
 }
 
-publicclass Prg5 {
-publicstaticvoid main(String[] args) {
-	//Sort s1=new Sort(1);
-	//Sort s2=new Sort(2);
-	//s1.start();
-	//s2.start();
-	Search s3=new Search();
-	s3.start();
-}
+public class Five
+{
+	public static void main(String args[])
+	{
+		Sort s1=new Sort(1);
+		Sort s2=new Sort(2);
+		s1.run();
+		s2.run();
+		Search s3= new Search();
+		s3.run();
+	}
 }
 
+//***********************************************************************************************************************************
+//algo.sort>BubbleSort.java
+
+package algo.sort;
+public class BubbleSort
+{
+	public int[] Bubble(int arr[], int n)
+	{
+		int temp=0;int i;
+		for(i=0;i<n;i++)
+		{
+			for(int j=1;j<(n-i);j++)
+			{
+				if(arr[j-1]>arr[j])
+				{
+				temp=arr[j-1];
+				arr[j-1]=arr[j];
+				arr[j]=temp;
+				}
+			}
+		}
+		try{
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException e)
+		{	
+		e.printStackTrace();
+		}
+		System.out.println("Sorting using Bubble Sort");
+		return arr;
+	}
+}
+
+
+//**************************************************************************************************************************
+//algo.sort>SelectionSort.java
+
+package algo.sort;
+public class BubbleSort
+{
+	public int[] Bubble(int arr[], int n)
+	{
+		int temp=0;int i;
+		for(i=0;i<n;i++)
+		{
+			for(int j=1;j<(n-i);j++)
+			{
+				if(arr[j-1]>arr[j])
+				{
+				temp=arr[j-1];
+				arr[j-1]=arr[j];
+				arr[j]=temp;
+				}
+			}
+		}
+		try{
+			Thread.sleep(1000);
+		}
+		catch(InterruptedException e)
+		{	
+		e.printStackTrace();
+		}
+		System.out.println("Sorting using Bubble Sort");
+		return arr;
+	}
+}
+
+
+//*****************************************************************************************************************************
+//algo.search>BinarySearch.java
+
+package algo.search;
+public class BinarySearch
+{
+	public void Binary(int array[],int n,int key)
+	{
+		int first,last,middle,search;
+		search=key;
+		first=0;
+		last=n-1;
+		middle=(first+last)/2;
+		while(first<=last)
+		{
+			if(array[middle]<search)
+			{
+				first=middle+1;
+				middle=(last+first)/2;
+			}
+			else if(array[middle] == search)
+			{
+				System.out.println("\n"+search+" found at location "+(middle+1)+ " using binary search ");
+				break;
+			}
+			else {
+				last=middle-1;
+				middle=(last+first)/2;
+			}
+		if(first>last)
+			System.out.println(search+" is not present in the list\n");
+		}
+	}
+}
 
