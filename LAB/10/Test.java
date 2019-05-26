@@ -1,38 +1,21 @@
+//Servlet Program Test.java (Server Side Program)
 
-public class Ten {
-
-}
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<form action="Test" method="post">
-Name: <input type="text" name="ename">
-Number: <input type="text" name="enum">
-Department: <input type="text" name="edept">
-Date of Joining: <input type="text" name="edoj">
-<input type="submit">
-</form>
-</body>
-</html>
-
-Servlet Program Test.java (Server Side Program)
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.sql.*;
-
+import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import java.sql.*;
+import java.util.*;
 
-/* Only doPost() method Implementation */
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+/**
+ * Servlet implementation class Test
+ */
+public class Test extends HttpServlet {
+	//private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
 		ArrayList<String> list=new ArrayList<String>();
@@ -45,7 +28,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:8889/emp","root","root");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:8889/emp","root","Ravi.619@sql");
 			Statement st=con.createStatement();
 			int row=st.executeUpdate("Insert into employee values('"+list.get(0)+"','"+list.get(1)+"','"+list.get(2)+"','"+list.get(3)+"');");
 			if(row>0){
@@ -57,8 +40,11 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			}
 			
 		} catch (ClassNotFoundException e) {
-`			e.printStackTrace();
+			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+}
+
+
