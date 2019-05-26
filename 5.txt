@@ -108,35 +108,32 @@ public class BubbleSort
 //algo.sort>SelectionSort.java
 
 package algo.sort;
-public class BubbleSort
+public class SelectionSort
 {
-	public int[] Bubble(int arr[], int n)
+	public int[] Selection(int arr[],int n)
 	{
-		int temp=0;int i;
-		for(i=0;i<n;i++)
+		int i;
+		for(i=0;i<n-1;i++)
 		{
-			for(int j=1;j<(n-i);j++)
-			{
-				if(arr[j-1]>arr[j])
-				{
-				temp=arr[j-1];
-				arr[j-1]=arr[j];
-				arr[j]=temp;
+			int index=i;
+			for(int j=i+1;j<n;j++)
+				if(arr[j]<arr[index])
+					index=j;
+			int smallernumber = arr[index];
+			arr[index]= arr[i];
+			arr[i] = smallernumber;
+			try{
+				Thread.sleep(1000);
 				}
+			catch(InterruptedException e)
+			{
+				e.printStackTrace();
 			}
 		}
-		try{
-			Thread.sleep(1000);
-		}
-		catch(InterruptedException e)
-		{	
-		e.printStackTrace();
-		}
-		System.out.println("Sorting using Bubble Sort");
-		return arr;
+		System.out.println("Sorting using Selection Sort");
+	return arr;
 	}
 }
-
 
 //*****************************************************************************************************************************
 //algo.search>BinarySearch.java
